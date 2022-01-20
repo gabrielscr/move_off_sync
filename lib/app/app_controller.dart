@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:move_off_sync/app/model/product_model.dart';
 import 'package:move_off_sync/core/storage/local_storage.dart';
@@ -18,10 +17,9 @@ class AppController {
     return produtos;
   }
 
-  Future<void> sendContentToDevice(ProductModel model) async {
+  //Hive: Tempo de resposta pra inserir lista no db local: 20 ~ 50 ms
+  Future<void> insertAll(ProductModel model) async {
     storage = await LocalStorageImpl.instance;
-
-    storage.delete('products');
 
     storage.put(
       'products',
@@ -29,29 +27,15 @@ class AppController {
     );
   }
 
-  Future<ProductModel> readContentFromDevice() async {
-    Stopwatch stopwatch = Stopwatch()..start();
-
-    if (kDebugMode) {
-      print('iniciando leitura...');
-    }
-
+//Hive: Tempo de resposta pra obter lista para atualizar o listview: 8 ~ 20ms
+  Future<ProductModel> getAll() async {
     final ProductModel produto = ProductModel.fromJson(storage.get('products'));
-
-    if (kDebugMode) {
-      print('terminou leitura em ${stopwatch.elapsedMilliseconds}ms');
-    }
 
     return produto;
   }
 
-  ProductModel updateAndList(int id) {
-    Stopwatch stopwatch = Stopwatch()..start();
-
-    if (kDebugMode) {
-      print('iniciando update');
-    }
-
+//Hive: Tempo de resposta pra realizar update e obter lista para atualizar o listview: 30 ~ 45ms
+  ProductModel updateProduct(int id) {
     final ProductModel produto = ProductModel.fromJson(storage.get('products'));
 
     final produtoEncontrado = produto.products!.firstWhere((e) => e.productId == id);
@@ -63,12 +47,6 @@ class AppController {
       produto.toJson(),
     );
 
-    final model = ProductModel.fromJson(storage.get('products'));
-
-    if (kDebugMode) {
-      print('terminou update em ${stopwatch.elapsedMilliseconds}ms');
-    }
-
-    return model;
+    return ProductModel.fromJson(storage.get('products'));
   }
 }
