@@ -1,0 +1,127 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:2038652428357253319",
+      "lastPropertyId": "20:3367550042807965969",
+      "name": "Product",
+      "properties": [
+        {
+          "id": "1:164920824180743285",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4677034713847739221",
+          "name": "productId",
+          "type": 6
+        },
+        {
+          "id": "3:1567208003542915021",
+          "name": "ean",
+          "type": 9
+        },
+        {
+          "id": "4:6105330724265116599",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:1505543811306565457",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "6:3081227081226197890",
+          "name": "siteSelected",
+          "type": 9
+        },
+        {
+          "id": "7:3880411643533312047",
+          "name": "active",
+          "type": 1
+        },
+        {
+          "id": "8:388422781776437987",
+          "name": "status",
+          "type": 1
+        },
+        {
+          "id": "9:4379723894877588699",
+          "name": "siteId",
+          "type": 6
+        },
+        {
+          "id": "10:5995995036652280368",
+          "name": "picking",
+          "type": 9
+        },
+        {
+          "id": "11:38504668873652823",
+          "name": "sku",
+          "type": 9
+        },
+        {
+          "id": "12:5684142023987239884",
+          "name": "skuWithDetail",
+          "type": 9
+        },
+        {
+          "id": "13:1481874661670080585",
+          "name": "imagesUrl",
+          "type": 30
+        },
+        {
+          "id": "14:7504376494157381935",
+          "name": "makerId",
+          "type": 6
+        },
+        {
+          "id": "15:8504346657728166299",
+          "name": "maker",
+          "type": 9
+        },
+        {
+          "id": "16:2211442239002566408",
+          "name": "brandId",
+          "type": 6
+        },
+        {
+          "id": "17:1052304276964951315",
+          "name": "brand",
+          "type": 9
+        },
+        {
+          "id": "18:4955296733903528921",
+          "name": "brandImage",
+          "type": 9
+        },
+        {
+          "id": "19:5977330996276310855",
+          "name": "quantity",
+          "type": 6
+        },
+        {
+          "id": "20:3367550042807965969",
+          "name": "rating",
+          "type": 8
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:2038652428357253319",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
