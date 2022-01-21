@@ -19,6 +19,8 @@ class _AppHomeState extends State<AppHome> {
 
   bool showReadButton = true;
 
+  bool showBox = false;
+
   @override
   void initState() {
     productModel = ProductModel(
@@ -33,11 +35,14 @@ class _AppHomeState extends State<AppHome> {
 
   @override
   Widget build(BuildContext context) {
+    return showBox ? buildAppForBox() : buildAppForHive();
+  }
+
+  buildAppForBox() {
     return Scaffold(
       appBar: AppBar(
         actions: [
           Visibility(
-            visible: showReadButton,
             child: TextButton(
               onPressed: () => setState(() {
                 productModel.products = appBoxController.getAll();
@@ -47,33 +52,13 @@ class _AppHomeState extends State<AppHome> {
                 showReadButton = false;
               }),
               child: const Text(
-                'read from device',
+                'read (box)',
                 style: TextStyle(
                   color: Colors.black,
                 ),
               ),
             ),
           ),
-          // Visibility(
-          //   visible: showSyncButton,
-          //   child: TextButton(
-          //     onPressed: () => controller.sendContentToDevice(productModel).then(
-          //       (_) {
-          //         setState(() {
-          //           productModel.products!.clear();
-
-          //           showReadButton = true;
-          //         });
-          //       },
-          //     ),
-          //     child: const Text(
-          //       'send to device',
-          //       style: TextStyle(
-          //         color: Colors.black,
-          //       ),
-          //     ),
-          //   ),
-          // ),
           Visibility(
             visible: showSyncButton,
             child: TextButton(
@@ -81,9 +66,13 @@ class _AppHomeState extends State<AppHome> {
                 appBoxController.insertAllProducts(productModel.products!);
 
                 showReadButton = true;
+
+                setState(() {
+                  productModel.products!.clear();
+                });
               },
               child: const Text(
-                'send to device(box)',
+                'send to (box)',
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -101,7 +90,7 @@ class _AppHomeState extends State<AppHome> {
               },
             ),
             child: const Text(
-              'get data (json)',
+              'read json',
               style: TextStyle(
                 color: Colors.black,
               ),
@@ -109,35 +98,114 @@ class _AppHomeState extends State<AppHome> {
           ),
         ],
       ),
-      body: Visibility(
-        visible: showReadButton,
-        child: const Center(
-          child: Text('Files sent!'),
-        ),
-        replacement: ListView.builder(
-          itemCount: productModel.products!.length,
-          itemBuilder: (ctx, i) {
-            final Product product = productModel.products![i];
+      body: ListView.builder(
+        itemCount: productModel.products!.length,
+        itemBuilder: (ctx, i) {
+          final Product product = productModel.products![i];
 
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListTile(
-                onTap: () => setState(() {
-                  productModel = appBoxController.updateProduct(product.productId!);
-                }),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                tileColor: Colors.grey.withOpacity(0.2),
-                title: Text(
-                  product.name!,
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                ),
-                subtitle: Text(product.description!),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              onTap: () => setState(() {
+                productModel = appBoxController.updateProduct(product.id);
+              }),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
               ),
-            );
-          },
-        ),
+              tileColor: Colors.grey.withOpacity(0.2),
+              title: Text(
+                product.name!,
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+              subtitle: Text(product.description!),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  buildAppForHive() {
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          Visibility(
+            child: TextButton(
+              onPressed: () {
+                controller.getAll().then((value) {
+                  setState(() {
+                    productModel = value;
+                  });
+                });
+              },
+              child: const Text(
+                'read (hive)',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: showSyncButton,
+            child: TextButton(
+              onPressed: () => controller.insertAll(productModel).then(
+                (_) {
+                  setState(() {
+                    productModel.products!.clear();
+                  });
+                },
+              ),
+              child: const Text(
+                'send to (hive)',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => controller.getData().then(
+              (ProductModel model) {
+                setState(() {
+                  productModel = model;
+
+                  showSyncButton = true;
+                });
+              },
+            ),
+            child: const Text(
+              'read json',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: productModel.products!.length,
+        itemBuilder: (ctx, i) {
+          final Product product = productModel.products![i];
+
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              onTap: () => setState(() {
+                productModel = controller.updateProduct(product.productId!);
+              }),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              tileColor: Colors.grey.withOpacity(0.2),
+              title: Text(
+                product.name!,
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+              subtitle: Text(product.description!),
+            ),
+          );
+        },
       ),
     );
   }
