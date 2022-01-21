@@ -7,8 +7,13 @@ import 'package:move_off_sync/core/storage/local_storage.dart';
 class AppController {
   late final LocalStorage storage;
 
+  AppController() {
+    initStorage();
+  }
+
   Future<ProductModel> getData() async {
-    final String response = await rootBundle.loadString('assets/offline/product.json');
+    final String response =
+        await rootBundle.loadString('assets/offline/product.json');
 
     final produtos = ProductModel.fromJson(
       json.decode(response),
@@ -20,8 +25,6 @@ class AppController {
   //Hive: Tempo de resposta pra inserir lista no db local: 20 ~ 50 ms
   Future<void> insertAll(ProductModel model) async {
     Stopwatch watch = Stopwatch()..start();
-
-    storage = await LocalStorageImpl.instance;
 
     storage.put(
       'products',
@@ -46,7 +49,8 @@ class AppController {
     Stopwatch watch = Stopwatch()..start();
     final ProductModel produto = ProductModel.fromJson(storage.get('products'));
 
-    final produtoEncontrado = produto.products!.firstWhere((e) => e.productId == id);
+    final produtoEncontrado =
+        produto.products!.firstWhere((e) => e.productId == id);
 
     produtoEncontrado.description = 'oi';
 
@@ -58,5 +62,9 @@ class AppController {
     print('Hive >>>>>>>> updateProduct() => ${watch.elapsedMilliseconds} ms');
 
     return ProductModel.fromJson(storage.get('products'));
+  }
+
+  Future<void> initStorage() async {
+    storage = await LocalStorageImpl.instance;
   }
 }

@@ -34,7 +34,8 @@ class AppBoxController {
 
     box.putMany(products); //Insere todos os produtos encontrados do JSON
 
-    print('ObjectBox >>>>>>>> insertAllProducts() => ${watch.elapsedMilliseconds} ms');
+    print(
+        'ObjectBox >>>>>>>> insertAllProducts() => ${watch.elapsedMilliseconds} ms');
   }
 
 //ObjectBox: Tempo de resposta pra deletar produto e obter lista para atualizar o listview: 10 ~ 20ms
@@ -57,7 +58,8 @@ class AppBoxController {
     ProductModel productModel = ProductModel()
       ..products = box.getAll(); //Obtém listagem para atualizar o ListView
 
-    print('ObjectBox >>>>>>>> updateProduct() => ${watch.elapsedMilliseconds} ms');
+    print(
+        'ObjectBox >>>>>>>> updateProduct() => ${watch.elapsedMilliseconds} ms');
 
     return productModel;
   }

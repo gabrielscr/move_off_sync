@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:objectbox/objectbox.dart';
 
-ProductModel productModelFromJson(String str) => ProductModel.fromJson(json.decode(str));
+ProductModel productModelFromJson(String str) =>
+    ProductModel.fromJson(json.decode(str));
 
 String productModelToJson(ProductModel data) => json.encode(data.toJson());
 
@@ -14,7 +15,8 @@ class ProductModel {
   List<Product>? products;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        products: List<Product>.from(json["products"].map((x) => Product.fromJson(x))),
+        products: List<Product>.from(
+            json["products"].map((x) => Product.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -109,7 +111,8 @@ class Product {
         productLocation: ProductLocation.fromJson(json["productLocation"]),
         size: Size.fromJson(json["size"]),
         packingSize: PackingSize.fromJson(json["packingSize"]),
-        attributes: List<Attribute>.from(json["attributes"].map((x) => Attribute.fromJson(x))),
+        attributes: List<Attribute>.from(
+            json["attributes"].map((x) => Attribute.fromJson(x))),
         variacoes: List<dynamic>.from(json["variacoes"].map((x) => x)),
         price: Price.fromJson(json["price"]),
         estoque: Estoque.fromJson(json["estoque"]),
@@ -178,7 +181,8 @@ class Attribute {
         "attributeName": attributeName,
         "type": type,
         "showProduct": showProduct,
-        "attributeValues": List<dynamic>.from(attributeValues!.map((x) => x.toJson())),
+        "attributeValues":
+            List<dynamic>.from(attributeValues!.map((x) => x.toJson())),
       };
 }
 
@@ -339,7 +343,8 @@ class ProductCategory {
   int? subCategoryId;
   String? subCategoryName;
 
-  factory ProductCategory.fromJson(Map<String, dynamic> json) => ProductCategory(
+  factory ProductCategory.fromJson(Map<String, dynamic> json) =>
+      ProductCategory(
         lojaId: json["lojaId"],
         nomeCategoriaLoja: json["nomeCategoriaLoja"],
         categoryId: json["categoryId"],
@@ -367,7 +372,8 @@ class ProductLocation {
   String? distribuidor;
   String? clienteStatusDistribuidor;
 
-  factory ProductLocation.fromJson(Map<String, dynamic> json) => ProductLocation(
+  factory ProductLocation.fromJson(Map<String, dynamic> json) =>
+      ProductLocation(
         distribuidor: json["distribuidor"],
         clienteStatusDistribuidor: json["clienteStatusDistribuidor"],
       );
