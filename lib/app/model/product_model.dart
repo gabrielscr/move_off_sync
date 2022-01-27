@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:objectbox/objectbox.dart';
 
-ProductModel productModelFromJson(String str) =>
-    ProductModel.fromJson(json.decode(str));
+ProductModel productModelFromJson(String str) => ProductModel.fromJson(json.decode(str));
 
 String productModelToJson(ProductModel data) => json.encode(data.toJson());
 
@@ -15,8 +14,7 @@ class ProductModel {
   List<Product>? products;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        products: List<Product>.from(
-            json["products"].map((x) => Product.fromJson(x))),
+        products: List<Product>.from(json["products"].map((x) => Product.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -90,65 +88,14 @@ class Product {
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         productId: json["productId"],
-        ean: json["ean"],
         name: json["name"],
         description: json["description"],
-        siteSelected: json["siteSelected"],
-        active: json["active"],
-        status: json["status"],
-        siteId: json["siteId"],
-        picking: json["picking"],
-        sku: json["sku"],
-        skuWithDetail: json["skuWithDetail"],
-        imagesUrl: List<String>.from(json["imagesUrl"].map((x) => x)),
-        makerId: json["makerId"],
-        maker: json["maker"],
-        brandId: json["brandId"],
-        brand: json["brand"],
-        brandImage: json["brandImage"],
-        quantity: json["quantity"],
-        productCategory: ProductCategory.fromJson(json["productCategory"]),
-        productLocation: ProductLocation.fromJson(json["productLocation"]),
-        size: Size.fromJson(json["size"]),
-        packingSize: PackingSize.fromJson(json["packingSize"]),
-        attributes: List<Attribute>.from(
-            json["attributes"].map((x) => Attribute.fromJson(x))),
-        variacoes: List<dynamic>.from(json["variacoes"].map((x) => x)),
-        price: Price.fromJson(json["price"]),
-        estoque: Estoque.fromJson(json["estoque"]),
-        label: Label.fromJson(json["label"]),
-        rating: json["rating"],
       );
 
   Map<String, dynamic> toJson() => {
         "productId": productId,
-        "ean": ean,
         "name": name,
         "description": description,
-        "siteSelected": siteSelected,
-        "active": active,
-        "status": status,
-        "siteId": siteId,
-        "picking": picking,
-        "sku": sku,
-        "skuWithDetail": skuWithDetail,
-        "imagesUrl": List<dynamic>.from(imagesUrl!.map((x) => x)),
-        "makerId": makerId,
-        "maker": maker,
-        "brandId": brandId,
-        "brand": brand,
-        "brandImage": brandImage,
-        "quantity": quantity,
-        "productCategory": productCategory!.toJson(),
-        "productLocation": productLocation!.toJson(),
-        "size": size!.toJson(),
-        "packingSize": packingSize!.toJson(),
-        "attributes": List<dynamic>.from(attributes!.map((x) => x.toJson())),
-        "variacoes": List<dynamic>.from(variacoes!.map((x) => x)),
-        "price": price!.toJson(),
-        "estoque": estoque!.toJson(),
-        "label": label!.toJson(),
-        "rating": rating,
       };
 }
 
@@ -181,8 +128,7 @@ class Attribute {
         "attributeName": attributeName,
         "type": type,
         "showProduct": showProduct,
-        "attributeValues":
-            List<dynamic>.from(attributeValues!.map((x) => x.toJson())),
+        "attributeValues": List<dynamic>.from(attributeValues!.map((x) => x.toJson())),
       };
 }
 
@@ -343,8 +289,7 @@ class ProductCategory {
   int? subCategoryId;
   String? subCategoryName;
 
-  factory ProductCategory.fromJson(Map<String, dynamic> json) =>
-      ProductCategory(
+  factory ProductCategory.fromJson(Map<String, dynamic> json) => ProductCategory(
         lojaId: json["lojaId"],
         nomeCategoriaLoja: json["nomeCategoriaLoja"],
         categoryId: json["categoryId"],
@@ -372,8 +317,7 @@ class ProductLocation {
   String? distribuidor;
   String? clienteStatusDistribuidor;
 
-  factory ProductLocation.fromJson(Map<String, dynamic> json) =>
-      ProductLocation(
+  factory ProductLocation.fromJson(Map<String, dynamic> json) => ProductLocation(
         distribuidor: json["distribuidor"],
         clienteStatusDistribuidor: json["clienteStatusDistribuidor"],
       );
