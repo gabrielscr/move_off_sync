@@ -21,6 +21,8 @@ class AppSqliteController {
   }
 
   Future<int> insertAllProducts(List<Product> products) async {
+    await deleteProducts();
+
     Stopwatch watch = Stopwatch()..start();
 
     int result = 0;
@@ -46,13 +48,9 @@ class AppSqliteController {
     return products;
   }
 
-  Future<void> deleteProduct(int id) async {
+  Future<void> deleteProducts() async {
     final db = await initializeDB();
-    await db.delete(
-      'products',
-      where: "id = ?",
-      whereArgs: [id],
-    );
+    await db.delete('products');
   }
 
   Future<List<Product>> updateProduct(Product product) async {
